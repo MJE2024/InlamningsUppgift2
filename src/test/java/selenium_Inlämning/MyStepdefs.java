@@ -22,12 +22,7 @@ public class MyStepdefs {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    /*@Given("I open the registration page")
-    public void iOpenTheRegistrationPage() {
-        driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.get("file:///Users/mjdator/Library/Mobile%20Documents/com~apple~CloudDocs/0,1%20Utbildning%20/02%20Del%203.%20Testautomatisering%20och%20programmering/Nästa%20InlämningsUppgift/Register/Register.html"); // din riktiga fil-url
-    }*/
+
     //---------Dubbla Browser--------------
     @Given("I open the registration page")
     public void iOpenTheRegistrationPage() {
@@ -35,7 +30,7 @@ public class MyStepdefs {
         // välj browser via -Dbrowser=chrome / -Dbrowser=firefox
         String browser = System.getProperty("browser", "chrome").toLowerCase();
 
-        // istället för alltid ChromeDriver
+        // istället för alltid ChromeDriver - Välj vilken i "RUN"
         switch (browser) {
             case "firefox" -> driver = new FirefoxDriver();
             case "chrome" -> driver = new ChromeDriver();
@@ -46,7 +41,7 @@ public class MyStepdefs {
 
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        // gör fönstret lite större en den lilla browserrutan så jag ser.
+        // gör fönstret större en den lilla browserrutan så jag ser.
         driver.manage().window().maximize(); //
 
         driver.get("file:///Users/mjdator/Library/Mobile%20Documents/com~apple~CloudDocs/0,1%20Utbildning%20/02%20Del%203.%20Testautomatisering%20och%20programmering/Nästa%20InlämningsUppgift/Register/Register.html");
@@ -56,7 +51,6 @@ public class MyStepdefs {
     @When("I enter first name {string}")
     public void iEnterFirstName(String firstName) {
         WebDriverWait Name = new WebDriverWait(driver, Duration.ofSeconds(10));
-        //Name.until(ExpectedConditions.elementToBeClickable(By.id("member_firstname"))).sendKeys("Klas");
         Name.until(ExpectedConditions.elementToBeClickable(By.id("member_firstname"))) //Gjorde om för att få mindre "Hårdkodat" och kan användas flera gånger
                 .sendKeys(firstName);
     }
@@ -66,7 +60,7 @@ public class MyStepdefs {
         wait.until(ExpectedConditions.elementToBeClickable(By.id("member_lastname")))
                 .sendKeys(lastName);
     }
-        //Toppen att jag hittade dob date of birth och dob field Då letar den efter alla sånna fält och sparar massa kod och fel
+        //Toppen att jag hittade dob "date of birth" och "dobField" Då letar den efter alla sånna fält och sparar massa kod och fel
     @And("I enter date of birth {string}")
     public void iEnterDateOfBirth(String dob) {
         var dobField = wait.until(ExpectedConditions.elementToBeClickable(
@@ -101,19 +95,7 @@ public class MyStepdefs {
         wait.until(ExpectedConditions.elementToBeClickable(By.id("signupunlicenced_confirmpassword")))
                 .sendKeys(confirmPassword);
     }
-//------------------------
-    /*@And("I accept terms and conditions")
-    public void iAcceptTermsAndConditions() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("sign_up_25")))
-                .click();
-    }
 
-    @And("I confirm that I am over 18 years old")
-    public void iConfirmThatIAmOver18YearsOld() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("sign_up_26")))
-                .click();
-    }*/
-    //---------------------NY Kod fungerar
     @And("I accept terms and conditions")
     public void iAcceptTermsAndConditions() {
         wait.until(ExpectedConditions.elementToBeClickable(
@@ -127,15 +109,7 @@ public class MyStepdefs {
                         By.cssSelector("label[for='sign_up_26']")))
                 .click();
     }
-//-----------
-   /* @And("I accept code of ethics and conduct")
-    public void iAcceptCodeOfEthicsAndConduct() {
-        wait.until(ExpectedConditions.elementToBeClickable(
-                By.id("fanmembersignup_agreetocodeofethicsandconduct")
-        )).click();
-    }*/
 
-    //---------NY fungerar-----------
     @And("I accept code of ethics and conduct") //Fick använda "Lable" då fungerade det
     public void iAcceptCodeOfEthicsAndConduct() {
         wait.until(ExpectedConditions.elementToBeClickable(
@@ -148,7 +122,6 @@ public class MyStepdefs {
         wait.until(ExpectedConditions.elementToBeClickable(By.name("join")))
                 .click();
     }
-    //-------------  OBS!! KLAR KOD OVAN!!! ---------
 
     @Then("I should see a success message") // tog så den hittade en header text för att veta att det gått igenom
     public void iShouldSeeASuccessMessage() {
